@@ -14,9 +14,11 @@ class FilmsSpider(scrapy.Spider):
         for film_link in film_links:
             yield response.follow(film_link, self.film_page_parse)
         
-         next_page = response.xpath('//a[contains(@title, "Фильмы по алфавиту") and contains(text(), "Следующая страница")]/@href').extract_first()
-         if next_page:
-             yield response.follow(next_page, callback=self.parse)
+
+        next_page = response.xpath('//a[contains(@title, "Фильмы по алфавиту") and contains(text(), "Следующая страница")]/@href').extract_first()
+        if next_page:
+            yield response.follow(next_page, callback=self.parse)
+
 
     def film_page_parse(self, response):
 
